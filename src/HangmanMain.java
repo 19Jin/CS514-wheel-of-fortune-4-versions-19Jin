@@ -24,8 +24,16 @@ public class HangmanMain {
         String phrase = phraseList.get(r);
         System.out.println(phrase);
 
-        //
-
+        //build a hidden phrase with asterisks
+        StringBuilder sb = new StringBuilder("");
+        for(int i = 0; i < phrase.length(); i++){
+            if(Character.isLetter(phrase.charAt(i))){
+                sb.append('*');
+            }else{
+                sb.append(phrase.charAt(i));
+            }
+        }
+        System.out.println(sb);
 
     }
 }

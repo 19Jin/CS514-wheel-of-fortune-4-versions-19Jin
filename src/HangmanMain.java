@@ -36,9 +36,15 @@ public class HangmanMain {
         }
         System.out.println(sb);
 
+        //input the number of guesses allowed
+        System.out.println("Enter the number of guesses allowed: ");
+        Scanner numberKeyboard = new Scanner(System.in);
+        int num = numberKeyboard.nextInt();
+
         //user plays guessing game
         Boolean flag = true;
-        while(flag){
+        int numOfGuess = 0;
+        while(flag && numOfGuess < num){
             System.out.println("Enter a letter: ");
             Scanner keyboard = new Scanner(System.in);
             String userGuess = keyboard.nextLine().toLowerCase();
@@ -56,9 +62,17 @@ public class HangmanMain {
                 // Check if the user has guessed all letters correctly
                 flag = !sb.toString().equals(phrase);
             }
+            numOfGuess++;
+            int numOfLast = num - numOfGuess;
+            System.out.println("You Still Have "+ numOfLast + " Chances");
         }
 
-        System.out.println("Congratulations! You Win!!");
+        if(numOfGuess >= num){
+            System.out.println("You Failed");
+            System.out.println("You Missed "+ num+" Times");
+        }else{
+            System.out.println("Congratulations! You Win!!");
+        }
 
     }
 }

@@ -23,12 +23,8 @@ public class WheelOfFortuneMain {
         String phrase = phraseList.get(r);
         System.out.println(phrase);
 
-        //from here
-//        public static void main(String args[]){
-//
-//        }
-
     }
 
 }
+
 

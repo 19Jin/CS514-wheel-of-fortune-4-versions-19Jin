@@ -63,6 +63,7 @@ public class WheelOfFortuneMethods {
                 }
                 System.out.println("Correct Letter!");
                 // Check if the user has guessed all letters correctly
+                //convert StringBuilder into String
                 flag = !sb.toString().equals(phrase);
             }
             numOfGuess++;
@@ -83,23 +84,24 @@ public class WheelOfFortuneMethods {
 
     //randomPhrase -- returns a single phrase randomly chosen from a list
     public static String randomPhrase(){
-        String phraseSingle = "";
-        return phraseSingle;
+        // Generate and return a random phrase from the list
     }
 
     //generateHiddenPhrase -- returns the initial hidden phrase
-    public static String generateHiddenPhrase(){
-
+    public static String generateHiddenPhrase(String phrase){
+        // Generate the initial hidden phrase
     }
 
     //getGuess-- gets input from user and returns it.
-    public static Character getGuess(){
-
+    public static char getGuess(){
+        // gets input from user and returns it.
     }
 
-    //processGuess -- returns whether a letter matches,
+    // processGuess -- returns whether a letter matches,
     // and modifies the partially hidden phrase if there is a match.
-    public static void processGuess(Character userGuess){
-        //
+    public static boolean processGuess(char userGuess, String phrase, StringBuilder hiddenPhrase){
+        // check whether the guess letter matches
+        // modifies the partially hidden phrase
+        // return ture if matches, other false
     }
 }

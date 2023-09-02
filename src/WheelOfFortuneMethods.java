@@ -9,8 +9,52 @@ import java.util.Scanner;
 public class WheelOfFortuneMethods {
     public static void main(String[] args) {
 
-//        WheelOfFortuneMain wheelOfFortune = new WheelOfFortuneMain();
+        //input the number of guesses allowed
+        System.out.println("Enter the number of guesses allowed: ");
+        Scanner numberKeyboard = new Scanner(System.in);
+        int num = numberKeyboard.nextInt();
 
+        //user plays guessing game
+        Boolean match = true;
+        String p = randomPhrase();
+        System.out.println(p);
+        StringBuilder hidden = generateHiddenPhrase(p);
+
+        //counting:
+        int numOfGuess = 0;
+        int numOfIncorrect = 0;
+
+        //games:
+        while(numOfGuess < num){
+
+            System.out.println("Enter a letter: ");
+            char userGuess = getGuess();
+            boolean flag = processGuess(userGuess, p, hidden);
+
+            if(!flag){
+                numOfIncorrect++;
+            }else if(flag && !p.equals(hidden.toString())){
+                System.out.println("Correct Letter");
+            }else if(flag && p.equals(hidden.toString())){
+                break;
+            }
+            numOfGuess++;
+            int numOfLast = num - numOfGuess;
+            System.out.println("Number of Previous Misses: " + numOfIncorrect);
+            System.out.println("You Still Have " + numOfLast + " Chances");
+        }
+
+        if(numOfGuess >= num){
+            System.out.println("You Failed");
+            System.out.println("You Missed " + numOfIncorrect + " Times");
+        }else{
+            System.out.println("Congratulations! You Win!!");
+        }
+    }
+
+    //randomPhrase -- returns a single phrase randomly chosen from a list
+    public static String randomPhrase(){
+        // Get a random phrase from the list
         List<String> phraseList=null;
         // Get the phrase from a file of phrases
         try {
@@ -23,9 +67,12 @@ public class WheelOfFortuneMethods {
         Random rand = new Random();
         int r= rand.nextInt(3); // gets 0, 1, or 2
         String phrase = phraseList.get(r);
-        System.out.println(phrase);
+        return phrase;
+    }
 
-        //build a hidden phrase with asterisks
+    //generateHiddenPhrase -- returns the initial hidden phrase
+    public static StringBuilder generateHiddenPhrase(String phrase){
+        // Generate the initial hidden phrase
         StringBuilder sb = new StringBuilder("");
         for(int i = 0; i < phrase.length(); i++){
             if(Character.isLetter(phrase.charAt(i))){
@@ -35,66 +82,15 @@ public class WheelOfFortuneMethods {
             }
         }
         System.out.println(sb);
-
-        //input the number of guesses allowed
-        System.out.println("Enter the number of guesses allowed: ");
-        Scanner numberKeyboard = new Scanner(System.in);
-        int num = numberKeyboard.nextInt();
-
-        //user plays guessing game
-        Boolean flag = true;
-        int numOfGuess = 0;
-        int numOfIncorrect = 0;
-        while(flag && numOfGuess < num){
-            System.out.println("Enter a letter: ");
-            Scanner keyboard = new Scanner(System.in);
-            String userGuess = keyboard.nextLine().toLowerCase();
-            if(!Character.isLetter(userGuess.charAt(0))){
-                System.out.println("You Should Guess The Letter.");
-                numOfIncorrect++;
-            }else if(!phrase.toLowerCase().contains(userGuess)){
-                System.out.println("Wrong Letter");
-                numOfIncorrect++;
-            }else if(phrase.toLowerCase().contains(userGuess)){
-                for(int idx = 0; idx < phrase.length(); idx++){
-                    if(phrase.toLowerCase().charAt(idx) == userGuess.charAt(0)){
-                        sb.setCharAt(idx, phrase.charAt(idx));
-                    }
-                }
-                System.out.println("Correct Letter!");
-                // Check if the user has guessed all letters correctly
-                //convert StringBuilder into String
-                flag = !sb.toString().equals(phrase);
-            }
-            numOfGuess++;
-            int numOfLast = num - numOfGuess;
-            System.out.println(sb);
-            System.out.println("Number of Previous Misses: " + numOfIncorrect);
-            System.out.println("You Still Have " + numOfLast + " Chances");
-        }
-
-        if(numOfGuess >= num){
-            System.out.println("You Failed");
-            System.out.println("You Missed " + num + " Times");
-        }else{
-            System.out.println("Congratulations! You Win!!");
-        }
-
-    }
-
-    //randomPhrase -- returns a single phrase randomly chosen from a list
-    public static String randomPhrase(){
-        // Generate and return a random phrase from the list
-    }
-
-    //generateHiddenPhrase -- returns the initial hidden phrase
-    public static String generateHiddenPhrase(String phrase){
-        // Generate the initial hidden phrase
+        return sb;
     }
 
     //getGuess-- gets input from user and returns it.
     public static char getGuess(){
-        // gets input from user and returns it.
+        //input the number of guesses allowed
+        Scanner keyboard = new Scanner(System.in);
+        String userGuess = keyboard.nextLine().toLowerCase();
+        return userGuess.charAt(0);
     }
 
     // processGuess -- returns whether a letter matches,
@@ -103,5 +99,21 @@ public class WheelOfFortuneMethods {
         // check whether the guess letter matches
         // modifies the partially hidden phrase
         // return ture if matches, other false
+        if(!phrase.toLowerCase().contains(String.valueOf(userGuess))){
+            System.out.println("Wrong Letter");
+            return false;
+        }else if(!Character.isLetter(userGuess)){
+            System.out.println("You Should Guess The Letter");
+            return false;
+        }
+        else{
+            for(int idx = 0; idx < phrase.length(); idx++){
+                if(phrase.toLowerCase().charAt(idx) == userGuess){
+                    hiddenPhrase.setCharAt(idx, phrase.charAt(idx));
+                }
+            }
+            System.out.println(hiddenPhrase);
+        }
+        return true;
     }
 }
